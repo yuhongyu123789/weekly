@@ -17,5 +17,5 @@
 git branch # 查看本地仓库所有分支
 git add .
 git commit -m "新提交内容"
-git git push origin main
+git push origin main
 ```
