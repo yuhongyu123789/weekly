@@ -199,6 +199,14 @@ folder_name=os.path.dirname(os.path.abspath(file_name)) #替代__file__作用
 ```python
 import random
 from random import *
+random.seed([a]) #a可整数或浮点数 不填默认系统时间
+random.getstate()
+random.setstate(state)
+random.getrandbits(k)#kbit长度随机整数
+random.randrange(start,stop[,step]) #[start,end)
+random.random()#[0.0,1.0)
+random.uniform(a,b) #[a,b]区间随机浮点数
+random.sample(population,k) #population中选k个
 random.randint(1,10)
 random.choice(list)
 random.shuffle(list)
@@ -355,12 +363,40 @@ response=pyinputplus.inputCustom(addsUpToTen)
 ```python
 import time
 time.sleep(...)
+time.time() #时间戳
+time.gmtime([secs]) #秒转结构时间
+time.struct_time(tm_year=2019,tm_mon=8,tm_mday=8,tm_hour=4,tm_min=1,tm_sec=14,tm_wday=3,tm_yday=220,tm_isdst=0)
+time.localtime([secs]) #与gmtime类似
+time.ctime([secs]) #秒转字符串
+time.mktime(t) #结构时间转秒
+time.strftime(format[,t])
+	#例如：print(time.strftime("%a%b%d%H:%M:%S%Y".time_localtime()))
 ```
 
 ## turtle
 
 ```python
-import turtle #挖坑待填
+import turtle
+turtle.setup(width,height,startx,starty) #宽 高 左侧距离屏幕左边界距离 顶部相对屏幕上边界距离
+turtle.forward(distance)
+turtle.fd(distance)
+turtle.backward(distance)
+turtle.bk(distance)
+turtle.left(angle)
+turtle.lt(angle)
+turtle.right(angle)
+turtle.rt(angle)
+turtle.goto(x,y)
+turtle.setposition(x,y)
+turtle.setx(x)
+turtle.sety(y)
+turtle.setheading(angle)
+turtle.seth(angle)
+turtle.home()
+turtle.circle(radius,extent,steps)
+turtle.dot(size,color)#color为colorstring或RGB元组
+turtle.undo()
+turtle.speed([speed])#0~10或fastest fast normal slow slowest 或返回当前速度
 ```
 
 ## os
@@ -558,6 +594,23 @@ browser.back() #返回
 browser.forward() #前进
 browser.refresh() #刷新
 browser.quit() #关闭窗口
+
+driver=webdriver.Chrome()
+options=webdriver.ChromeOptions()
+options.headless=True #无界面
+driver.get('xxx')
+print(driver.page_source)
+
+#隐式等待
+driver.impicitly_wait(10)
+#显式等待
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions
+driver=webdriver.Chrome()
+locator=(By.CLASS_NAME,'s_position_list')
+cond=expected_conditions.presence_of_element_located(locator)
+WebDriverWait(driver,10,2).until(cond) #最长等待时间10秒，每2秒检查一次
 
 elem=browser.find_element_by_class_name(...)
 elem=browser.find_element_by_css_selector(...)
@@ -905,6 +958,27 @@ pyautogui.alert('...','标题') #返回'OK'
 pyautogui.confirm('...') #返回'OK'或'Cancel'
 pyautogui.prompt('...') #返回输入字符串
 pyautogui.password('...') #返回输入密码
+```
+
+## jieba
+
+```python
+import jieba
+ls=jieba.lcut(seq,cut_all=True)
+ls=jieba.lcut_for_search(seq) #提高召回率
+jieba.add_word(w) #添加新词汇
+```
+
+## wordcloud
+
+```python
+from wordcloud import WordCloud
+from scipy.misc import imread
+m=imread('1.jpeg')
+txt="""xxx"""
+wordcloud=WordCloud(background_color='white',width=80,height=60,max_words=200,max_font_size=30,font_path='MSYH.TTC',mask=m).generate(txt)
+	#其他参数：min_font_size stop_words font_step
+wordcloud.to_file('1.jpeg')
 ```
 
 ## 查缺补漏

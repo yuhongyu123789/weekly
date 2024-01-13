@@ -714,7 +714,80 @@ $ 字符串结束
 ?>
 ```
 
-本章暂时搁置
+### 数据读取
+
+```php
+<?php
+    $link=mysqli_connect("localhost","root","root","database9") or die(mysqli_error());
+    mysqli_query($link,"set names utf8");
+    $result=mysqli_query($link,"select * from books");
+    include_once("list.html");
+?>
+```
+
+list.html:
+
+```html
+<!DOCTYPE html>
+<html lang="en" class="is-centered is-bold">
+    <head>
+        <meta charset="UTF-8">
+        <title>标题</title>
+        <link href="css/bootstrap.css" rel="stylesheet">
+        <script src="js/jquery.min.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="col-sm-offset-2 col-sm-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading">图书列表</div>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-striped task-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>图书名称</th>
+                                <th>分类</th>
+                                <th>价格</th>
+                                <th>出版日期</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php while($rows=mysqli_fetch_array($result,MYSQLI_ASSOC)){ ?>
+                                <tr>
+                                    <td class="table-text">
+                                        <?php echo $rows['id']?>
+                                    </td>
+                                    <tb class="tabel-text">
+                                        <?php echo $rows['name'] ?>
+                                    </tb>
+                                    <tb class="table-text">
+                                        <?php echo $rows['category'] ?>
+                                    </tb>
+                                    <tb class="table-text">
+                                        <?php echo $rows['price'] ?>
+                                    </tb>
+                                    <tb><?php echo $rows['publish_time']?></tb>
+                                    <td>
+                                        <a href='editBook.php?id=<?php echo $rows['id']?>'>
+                                            <button class="btn btn-info edit">编辑</button>
+                                        </a>
+                                        <a href='deleeteBook.php?id=<?php echo $rows['id']?>'>
+                                            <button class="btn btn-dangeer delete">删除</button>
+                                        </a>
+                                    </td>
+                                </tr>
+                            <?php } ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
+```
 
 ## Cookie与Session
 

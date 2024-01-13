@@ -1372,3 +1372,93 @@ for{
     fmt.Printf("%x",readBuf[:n]);
 };
 ```
+
+## 排序
+
+### 基本排序
+
+```go
+import "sort"
+var intNums=[]int{780,-5,20};
+sort.Ints(intNums);//都是默认从小到大
+fmt.Printf("%v\n",intNums);
+var floatNums=[]float64{0.01472,-2.881652,4.13};
+sort.Float64s(floatNums);
+var strList=[]string{"zero","bus","six"};
+sort.Strings(strList);
+```
+
+### 实现递减/自定义排序
+
+```go
+var nums=[]int{17,81,3};
+var decreaseFun=func(i,j int)bool{
+	return !(nums[i]<nums[j]);
+};
+sort.Slice(nums,decreaseFun);
+fmt.Printf("%v\n",nums);
+```
+
+### Interface接口
+
+```go
+type Int32Nums []int32;
+func(x Int32Nums)Len() int{
+	return len(x);
+};
+func(x Int32Nums)Less(i,j int)bool{
+	m1:=x[i]%8;
+	m2:=x[j]%8;
+	return m1<m2;
+};
+func(x Int32Nums)Swap(i,j int){
+	x[i],x[j]=x[j],x[i];
+};
+var dx=Int32Nums{27,102,58,47,85};
+sort.Sort(dx);
+```
+
+## I/O
+
+### MultiReader和MultiWriter
+
+多数据读取/写入。
+
+```go
+var(
+	rd1=strings.NewReader("aaa\n");
+	rd2=strings.NewReader("bbb\n");
+	rd3=strings.NewReader("ccc\n");
+	rd4=strings.NewReader("ddd\n");
+);
+var mtRd=io.MultiReader(rd1,rd2,rd3,rd4);
+io.Copy(os.Stdout,mtRd);
+
+var(
+	wt1,_=os.Create("1.txt");
+	wt2,_=os.Create("2.txt");
+	wt3,_=os.Create("3.txt");
+);
+defer wt1.Close();
+defer wt2.Close();
+defer wt3.Close();
+data:=make([]byte,24);
+rand.Read(data);
+writer:=io.MultiWriter(wt1,wt2.wt3);
+var n,err=writer.Writer(data);
+if (err!=nil){
+	fmt.Println(err);
+};
+fmt.Printf("%d\n",n);//写入字节数
+```
+
+### SectionReader
+
+大型数据截取读取。
+
+```go
+var dataSrc=strings.NewReader("...");
+rd:=io.NewSectionReader(dataSrc,12,7); //从第12个字节开始截取7个字节。
+io.Copy(os.Stdout,rd);
+```
+

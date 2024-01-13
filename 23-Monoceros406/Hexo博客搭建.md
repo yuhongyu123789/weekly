@@ -105,7 +105,7 @@ hexo d
 
 使用主题：`Butterfly 4.10.0`
 
-[jerryc127/hexo-theme-butterfly: 🦋 A Hexo Theme: Butterfly (github.com)](https://github.com/jerryc127/hexo-theme-butterfly)
+https://github.com/jerryc127/hexo-theme-butterfly
 
 ```bash
 git clone -b master https://github.com/jerryc127/hexo-theme-butterfly.git themes/butterfly

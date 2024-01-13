@@ -111,7 +111,7 @@ less filename
 | /bin           | 系统引导执行的二进制可执行文件。                             |
 | /boot          | Linux内核、初始化RAM磁盘映像、引导装载器。                   |
 | /dev           | 包含设备节点的特殊目录。                                     |
-| /etc           | 包含系统范围的所有配置文件。例如c：rontab何时执行自动化作业；fstab存储设备及其关联的挂载点；passwd所有用户信息。 |
+| /etc           | 包含系统范围的所有配置文件。例如：crontab何时执行自动化作业；fstab存储设备及其关联的挂载点；passwd所有用户信息。 |
 | /home          | 每个用户都有各自的目录。                                     |
 | /lib           | 系统核心程序用到的共享库文件。类似DLL。                      |
 | /lost+found    | 格式化过的分区或设备包含该目录，用于文件系统损坏时的部分恢复。一般都是空的。 |
@@ -606,9 +606,646 @@ id
 
 文件目录权限：
 
-| 权限属性 | 文件 | 目录 |
-| -------- | ---- | ---- |
-| r        |      |      |
-| w        |      |      |
-| x        |      |      |
+| 权限属性 | 文件                                     | 目录                           |
+| -------- | ---------------------------------------- | ------------------------------ |
+| r        | 读取                                     | 列出内容（且可执行）           |
+| w        | 写入、截断；但删除、重命名由目录属性决定 | 创建、删除、重命名（且可执行） |
+| x        | 作为程序执行                             | 进入目录                       |
+
+### chmod
+
+```bash
+chmod 600 foo.txt
+```
+
+符号表示法：
+
+| 符号 | 含义     |
+| ---- | -------- |
+| u    | 属主     |
+| g    | 属组     |
+| o    | 其他用户 |
+| a    | all      |
+
+用法示例：
+
+```bash
+chmod u+x
+chmod u-x
+chmod +x
+chmod o-rw
+chmod go=rw
+chmod u+x,go=rx
+```
+
+选项：
+
+```bash
+chmod --recursive ...#对文件和目录都起作用
+```
+
+### umask
+
+```bash
+umask #查看默认掩码值 0002
+umask 0000#更改掩码值
+```
+
+上述掩码值为16进制数，二进制位上为1的剥夺该权力。
+
+### su
+
+略。
+
+### sudo
+
+略。
+
+### chown
+
+更改文件属主和属组。
+
+```bash
+chown bob #属主更改为bob
+chown bob:users #属主更改为bob，属组更改为users
+chown :admins #属组更改为admins 属主不变
+chown bob: #属主更改为bob 属组更改为bob的登录组
+```
+
+### chgrp
+
+更改文件属组，已废弃。
+
+### passwd
+
+普通用户修改自己密码，或root修改其他用户密码。
+
+## 进程
+
+### 查看进程
+
+静态查看：
+
+```bash 
+ps aux
+```
+
+STAT列字段说明：
+
+| 状态 | 含义                                     |
+| ---- | ---------------------------------------- |
+| R    | 运行或准备运行。                         |
+| S    | 睡眠，等待某个事件（按键、网络分组等）。 |
+| D    | 不可中断的睡眠，等待磁盘设备I/O。        |
+| T    | 已停止                                   |
+| Z    | 已终止但未被其父进程清理的子进程。       |
+| <    | 高优先级进程。                           |
+| N    | 低优先级进程。                           |
+
+其他列信息：
+
+| 列名  | 含义                          |
+| ----- | ----------------------------- |
+| USER  | 进程属主，用户ID              |
+| %CPU  | CPU占用率                     |
+| %MEM  | 内存占用率                    |
+| VSZ   | 虚拟内存大小                  |
+| RSS   | 驻留集大小，占用RAM数量（KB） |
+| START | 进程启动时间                  |
+
+动态查看：
+
+```bash
+top
+```
+
+信息字段：
+
+| 行   | 字段         | 含义                                                         |
+| ---- | ------------ | ------------------------------------------------------------ |
+| 1    | top          | 程序名称                                                     |
+|      | 14:59:20     | 当前时刻                                                     |
+|      | up 6:30      | 正常运行时间                                                 |
+|      | 2 users      | 2个登录用户                                                  |
+|      | load average | 平均负载，等待运行的进程数量，也就是可运行状态且共享CPU的进程数量。三个值分别为过去1min、5min、15min的平均值。低于1.0表示系统不繁忙。 |
+| 2    | Tasks        | 进程数量及其状态                                             |
+| 3    | Cpu(s)       |                                                              |
+|      | 0.7%us       | 用于用户进程（内核之外进程）                                 |
+|      | 1.0%sy       | 系统内核进程                                                 |
+|      | 0.0%ni       | 低优先级进程                                                 |
+|      | 98.3%id      | 空闲                                                         |
+|      | 0.0%wa       | 等待I/O                                                      |
+| 4    | Mem          | 物理内存                                                     |
+| 5    | Swap         | 交换空间（虚拟内存）                                         |
+
+键盘命令：h帮助，q退出。
+
+### 进程置于后台
+
+将xlogo进程置于后台：
+
+```bash
+xlogo &
+```
+
+使用以下命令查看shell在后台启动的作业列表：
+
+```bash
+jobs
+```
+
+使用以下命令将jobs编号为1的后台进程返回前台：
+
+```bash
+fg %1
+```
+
+停止/暂停进程：Ctrl-Z，恢复方法：使用fg或bg置于前/后台继续运行。
+
+### kill
+
+```bash
+kill -信号 进程PID
+```
+
+常用信号：
+
+| 代号 | 名称  | 含义                                            |
+| ---- | ----- | ----------------------------------------------- |
+| 1    | HUP   | 挂起。                                          |
+| 2    | INT   | 中断，类似Ctrl-C。                              |
+| 9    | KILL  | 杀死，最终手段，进程不能忽略。                  |
+| 15   | TERM  | 终止。                                          |
+| 18   | CONT  | 继续，SOPT或TSTP后恢复进程，bg和fg都会发送。    |
+| 19   | STOP  | 停止，暂停，进程不能忽略。                      |
+| 20   | TSTP  | 终端停止。                                      |
+| 3    | QUIT  | 退出。                                          |
+| 11   | SEGV  | 段错误，违规使用内存                            |
+| 28   | WINCH | 窗口变化，例如top和less会相应该信号以调整界面。 |
+
+### killall
+
+向匹配指定名称或用户名的多个进程发送信号。
+
+```bash
+killall [-u user] [-signal] name..
+```
+
+例如：
+
+```bash
+killall xlogo
+```
+
+### 关闭系统
+
+```bash
+halt
+poweroff
+reboot
+shutdown -h now #挂起
+shutdown -r now #重启
+```
+
+### 其他进程相关
+
+```bash
+pstree
+vmstat #静态
+vmstat 5 #5秒刷新一次
+xload #图形化
+tload #终端
+```
+
+## 环境
+
+### printenv
+
+```bash
+printenv | less
+printent USER
+echo $HOME
+```
+
+### set
+
+```bash
+set | less
+```
+
+### 常用环境变量
+
+| 变量    | 内容                              |
+| ------- | --------------------------------- |
+| DISPLAY | 屏幕名称，通常:0                  |
+| EDITOR  | 文本编辑器名称                    |
+| SHELL   | Shell程序名称                     |
+| HOME    | 主目录路径名                      |
+| LANG    | 字符集及其所使用语言的排序方式    |
+| OLDPWD  | 先前的工作目录                    |
+| PAGER   | 对输出结果进行分页的名称          |
+| PATH    | Shell搜索可执行程序名称的目录列表 |
+| PS1     | 提示字符串1                       |
+| PWD     | 当前工作目录                      |
+| TERM    | 终端类型名称                      |
+| TZ      | 指定时区                          |
+| USER    | 用户名                            |
+
+登录Shell会话启动文件顺序：
+
+```
+/etc/profile
+~/.bash_profile
+~/.bash_login
+~/.profile
+```
+
+非登录Shell会话启动文件顺序：
+
+```
+/etc/bash.bashrc
+~/.bashrc
+```
+
+字符串拼接：
+
+```bash
+foo="This is some "
+echo $foo
+foo=$foo"text."
+echo $foo
+```
+
+改动生效：
+
+```bash
+source ~/.bashrc
+```
+
+## 定制提示符
+
+### 转义字符
+
+略。
+
+### 增加颜色
+
+文字颜色：`\033[0;30m`至`\033[0;37m`为黑、红、绿、棕、蓝、紫、青、浅灰，`\033[1;30m`至`\033[1;37m]`为深灰、浅红、浅绿、黄、浅蓝、浅紫、浅青、白。
+
+背景颜色：同上，3\*换为4\*。
+
+例如：
+
+```bash
+PS1="\[\033[0;31m\]<\u@\h \W>\$\[\033[0m\]"
+```
+
+### 移动光标
+
+略。
+
+## 存储设备
+
+### 查看已挂载文件系统
+
+法一：查看文件`/etc/fstab`。
+
+法二：
+
+```bash
+mount
+```
+
+### 卸载文件系统
+
+例如卸载挂载到`/dev/sdc`上的CD-ROM：
+
+```bash
+umount /dev/sdc
+```
+
+### 新建、删除挂载点
+
+```bash
+mkdir /mnt/cdrom
+mount -t iso9660 /dev/sdc /mnt/cdrom
+unmount /dev/sdc
+```
+
+### 手动挂载
+
+例如：挂载16MB闪存。
+
+```bash
+sudo tail -f /var/log/messages
+```
+
+暂停后，插入闪存，并开始输出。发现“[sdb]”字样，符合SCISI磁盘设备名称
+
+当出现以下两行时：
+
+```
+sdb: sdb1
+sd 3:0:0:0: [sdb] Attached SCSI removable disk
+```
+
+即设备名称“/dev/sdb”，“/dev/sdb1”为其中第一个分区。
+
+挂载：
+
+``` bash
+sudo mkdir /mnt/flash
+sudo mount /dev/sdb1 /mnt/flash
+df
+```
+
+### fdisk
+
+示例：修改分区ID。
+
+```bash
+sudo umount /dev/sdb1 #fdisk前先卸载
+sudo fdisk /dev/sdb
+m #显示菜单
+p #检查现有的分区布局
+l #显示可能的分区类型长列表
+t #修改分区ID并输入新的ID
+w #写入修改后退出，也可不操作直接q退出
+```
+
+### mkfs
+
+创建文件系统。
+
+```bash
+sudo mkfs -t ext4 /dev/sdb1 #ext4
+sudo mkfs -t vfat /dev/sdb1 #fat32
+```
+
+### fsck
+
+检查闪存驱动器。
+
+```bash
+sudo fsck /dev/sdb1 #先卸载
+```
+
+### dd
+
+数据移动。
+
+```bash
+dd if=/dev/sdb of=/dev/sdc #两个驱动器之间移动
+dd if=/dev/sdb of=flash_drive.img #驱动器复制成文件
+dd if=/dev/cdrom of=ubuntu.iso
+```
+
+### genisoimage
+
+创建ISO映像文件。文件在`~/cd-rom-files`中，输出文件名为`cd-rom.iso`。-R表示添加启用Rock Ridge扩展的元数据，允许使用长文件名和POSIX风格的文件权限。-J启用Joliet扩展，允许Windows使用长文件名。
+
+```bash
+genisoimage -o cd-rom.iso -R -J ~/cd-rom-files
+```
+
+### mount
+
+直接挂载.iso文件，并进行md5检查。
+
+```bash
+mkdir /mnt/iso_image
+mount -t iso9660 -o loop image.iso /mnt/iso_image
+md5sum image.iso
+md5sum /dev/cdrom
+```
+
+### wodim
+
+擦除可刻录CD。
+
+```bash
+wodim dev=/dev/cdrm blank=fast
+```
+
+刻录映像文件。
+
+```bash
+wodim dev=/dev/cdrm image.iso
+```
+
+## 网络
+
+### ping
+
+```bash
+ping linuxcommand.org
+```
+
+### traceroute
+
+列出网络流量从本地到目标主机所经过的所有路由。
+
+```bash
+traceroute slashdot.org
+```
+
+星号隐藏即为打不通，-T或-I可显示。
+
+### ip
+
+取代ifoncifg。
+
+```bash
+ip a
+```
+
+### netstat
+
+检查系统网络接口：
+
+```bash
+netstat -ie
+```
+
+显示内核网络路由表：
+
+```bash
+netstat -r
+```
+
+目的地中以0结尾的代表网络中的任意主机，最后一行default的Gateway表示网络流量最终的去处，即网关。
+
+### ftp
+
+示例：从FTP服务器fileserver的`/pub/cd_images/Ubuntu-18.04`下载.iso文件：
+
+```bash
+ftp filserver #用户名anonymous 密码随意 进入ftp对话
+cd pub/cd_images/Ubuntu-18.04 #远程服务器目录切换
+ls
+lcd Desktop#本地路径切换
+get ubuntu-18.04-desktop-amd64.iso
+bye #退出ftp对话 同exit或quite
+```
+
+### wget
+
+下载文件。
+
+```bash
+wget http://linuxcommand.org/index.php
+```
+
+### ssh
+
+```bash
+ssh remote-sys 
+ssh bob@remote-sys #以bob用户身份登录
+ssh remote-sys free #执行命令后返回本地
+ssh remote-sys 'ls *' > dirlist.txt #远程执行扩展后结果保存到本地
+```
+
+### scp
+
+示例：将remote-sys主目录下的document.txt文件下载到本地pwd中。
+
+```bash
+scp remote-sys:document.txt .
+scp bob@remote-sys:document.txt . #指定bob用户
+```
+
+### sftp
+
+用法同ftp。
+
+## 查找文件
+
+### locate
+
+```bash
+locate bin/zip #查找文件完整路径中存在子字符串bin/zip的文件
+```
+
+locate命令的数据库使用cron，为1天1更新，如果需要查询最新建文件，需要手动执行：
+
+```bash
+updatedb
+```
+
+### find
+
+```bash
+find ~ -type d | wc -l #查找主目录下属性为目录的项，wc统计行数
+find ~ -type f -name "*.JPG" -size +1M | wc -l #大于1M的.JPG文件
+```
+
+-type可选参数：
+
+| 文件类型 | 描述         |
+| -------- | ------------ |
+| b        | 块设备文件   |
+| c        | 字符设备文件 |
+| d        | 目录         |
+| f        | 普通文件     |
+| l        | 符号链接     |
+
+-size计量单位符号：
+
+| 字符 | 单位    |
+| ---- | ------- |
+| b    | 512字节 |
+| c    | 字节    |
+| w    | 字      |
+| k    | KB      |
+| M    | MB      |
+| G    | GB      |
+
+测试条件略。
+
+操作符：
+
+```bash
+find ~ \(-type f -not -perm 0600\) -or \(-type d -not -perm 0700\)
+```
+
+预定义操作略。
+
+自定义操作：
+
+``` bash
+find ~ -type f -name 'foo*' -exec rm '{}' ';' #类似-delete操作
+find ~ -type f -name 'foo*' -exec rm '{}' + #将结果合并成一次输出结果
+find ~ -type f -name 'foo*' -ok ls -; '{}' ';' #执行前确定
+```
+
+### xargs
+
+从标准输入接收输入，转换为指定命令的参数列表。
+
+```bash
+find ~ -type f -name 'foo*' -print | xargs ls -l #同find的-exec选项
+```
+
+如果文件名包含空格，会将其视为参数分割。find的-print0生成由空字符分割的输出结果，xargs的-null或-0接受由空字符分割的输入：
+
+```bash
+find ~ -iname '*.jpg' -print0 | xargs --null ls -l
+```
+
+### touch
+
+设置或更新文件的访问、变更、修改时间，常用于创建文件。
+
+```bash
+touch playground/dir-{001..100}/file-{A..Z}
+```
+
+## 归档与备份
+
+### gzip
+
+```bash
+gzip foo.txt #将foo.txt压缩为foo.txt.gz 源文件不保留
+gunzip foo.txt #将too.txt.gz解压为foo.txt
+ls -l /etc | gzip >foo.txt.gz
+gunzip -c foo.txt | less #不解压，查看foo.txt.gz的内容
+zcat foo.txt.gz | less #同上
+```
+
+### bzip2
+
+```bash
+bzip2 foo.txt
+bunzip2 foo.txt.bz2
+```
+
+### tar
+
+```bash
+tar cf playground.tar playground #将playground目录归档为playground.tar
+tar tvf playground.tar #列出归档的详细清单
+tar xf ../playground.tar #提取归档内容
+find playground -name 'file-A' | tar czf playground.tgz -T - #-T从文件读取列表，创建gzip文件
+find playground -name 'file-A' | tar cjf playground.tbz -T - #创建bzip2文件
+ssh remote-sys 'tar ct - Documents' | tar xf -
+```
+
+### zip
+
+```bash
+zip -r playground.zip playground
+unzip ../playground.zip
+unzip -l playground.zip playground/dir-087/file-Z #-l只列出而不解压
+unzip playground.zip playground/dir-087/file-Z #如果已经存在会询问是否覆盖
+find playground -name 'file-A' | zip -@ file-A.zip #-@输入通过管道传入
+ls -l /etc/ | zip ls-etc.zip -
+unzip -p ls-etc.zip | less #-p管道
+```
+
+### rsync
+
+```bash
+rsync -av playground foo --delete #playground文件夹备份到foo文件夹 -a递归并保留属性 -v详细信息 --delete如果文件不存在，则在旧备份中删除，否则保留
+rsync -av --delete --rsh=ssh /etc /home /var/local remote-sys:/backup
+```
 

