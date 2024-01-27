@@ -37,6 +37,16 @@ mathjax: true
 
 -O：操作系统及版本检测
 
+-sP：基于icmp的扫描
+
+-p-：扫描0~65535所有端口，默认只前1000
+
+--min-rate：每秒最少发送数据包数量，值越高速度越快
+
+-sn：仅使用ping的方法发现主机
+
+-sT、-sU：分别进行详细的TCP、UDP端口扫描（-sU要root，还很慢...）
+
 ## 基本方法
 
 扫描单/多个目标地址：
@@ -71,4 +81,23 @@ nmap --script=realvnc-auth-bypass 192.168.0.105 #应用服务扫描，如VNC服�
 nmap -n -p 445 --script=broadcast 192.168.0.105 #探测局域网内更多服务开启情况
 nmap --script external baidu.com #Whois解析等其他信息查询
 nmap --script broadcast-dhcp-discover #DHCP监听
+```
+
+## 骚操作
+
+```bash
+nmap -sP 192.168.123.173
+nmap -p 80 --script http-iis-short-name-brute 192.168.123.173 #Windows服务器iis短文件名泄漏
+nmap -sV -p 1121 --script memcached-info 192.168.123.173 #Memcached未授权访问
+nmap -p 27017 --script mongodb-info 192.168.123.173 #mongodb未授权访问
+nmap -p 6370 --script redis-info 192.168.123.173 #redis未授权访问
+nmap --script http-slowloris --max-parallelism 400 blog.bbskali.cn #DDoS
+nmap --script ftp-brute --script-args brute.emptypass=true,ftp-brute.timeout=30,userdb=/root/zi.txt,brute.useraspass=true,passdb=/root/passwords.txt,brute.threads=3,brute.delay=6 192.168.123.173 #ftp弱口令暴力破解
+nmap --script mysql-empty-password 192.168.123.173 #mysql匿名访问
+nmap -v -v --script ssl-cert blog.bbskali.cn #验证ssl-cert证书问题
+nmap -Pn --script ssl-date blog.bbskali.cn #验证ssl证书有限期
+nmap -p 23 --script telnet-brute --script-args userdb=myusers.lst,passdb=mypwds.lst --script-args telnet-brute.timeout=8s 192.168.123.173 #暴力破解telnet
+nmap -sV --script unusual-port 192.168.123.173 #精确确认端口运行的服务
+nmap --script vnc-info 192.168.123.173
+nmap --script vnc-brute --script-args brute.guesses=6,brute.emptypass=true,userdb=/root/zi.txt,brute.useraspass=true,passdb=/root/zi.txt,brute.retries=3,brute.threads=2,brute.delay=3 192.168.123.173 #暴力破解vnc
 ```

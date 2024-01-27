@@ -62,7 +62,7 @@ whois baidu.com
 用途同上。
 
 ```bash
-dmitry -w baidu.com
+dmitry -w baidu.com #whois
 dmitry -s baidu.com -o subdomain #-s查子域名 -o输出文件 要挂梯子
 dmitry -p 192.168.29.136 #端口扫描
 ```
@@ -72,7 +72,20 @@ dmitry -p 192.168.29.136 #端口扫描
 收集域名信息，如：主机地址信息、域名服务器、邮件交换记录等。
 
 ```bash
-dnsenum -w baidu.com
+dnsenum --enum benet.com
+dnsenum -w baidu.com #WHOIS请求
+    #--threads [number] 多进程
+    #-r 递归查询
+    #-d WHOIS请求之间时间延迟数 s
+    #-o 指定输出位置
+```
+
+#### fierce
+
+跟dnsenum差不多。
+
+```bash
+fierce -dns baidu.com
 ```
 
 #### nslookup
@@ -95,6 +108,43 @@ exit
 ping -c 4 www.baidu.com #发送4次
 ```
 
+#### snmpwalk
+
+查询指定的所有SNMP对象标识OID树信息，例如测试Windows主机：
+
+```bash
+snmpwalk -c public 192.168.41.138 -v 2c
+```
+
+枚举安装的软件：
+
+```bash
+snmpwalk -c public 192.168.41.138 -v 1
+```
+
+枚举打开的TCP端口：
+
+```bash
+snmpwalk -c public 192.168.41.138 -v 1 | grep tcpConnState | cut -d "." -f6 | sort -nu
+```
+
+#### snmpcheck
+
+好像改版了？？？先不写了。
+
+#### scapy
+
+多行并行跟踪路由。
+
+```python
+ans,unans=sr(IP(dst="www.rzchina.net/30",ttl=(1,6))/TCP()) #建立连接
+ans.make_table(lambda(s,r):(s.dst,s.ttl,r.src)) #查看数据包发送情况
+res,unans=traceroute(["www.google.com","www.kali.org","www.rzchina.net"],dport=[80,443],maxttl=20,retry=-2) #查看TCP路由跟踪信息
+res.graph() #以图的形式显示 但是报错？？
+res.graph(target=">/tmp/graph.svg") #保存
+exit()
+```
+
 ### 扫描端口
 
 略。
@@ -103,15 +153,15 @@ ping -c 4 www.baidu.com #发送4次
 
 #### TTL识别
 
-| 操作系统                                                     | TTL值 |
-| ------------------------------------------------------------ | ----- |
-| UNIX                                                         | 255   |
-| Compaq Tru64 5.0                                             | 64    |
-| Windows XP-32bit                                             | 128   |
-| Linux Kernel 2.2.x & 2.4.x                                   | 64    |
-| FreeBSD 4.1,4.0,3.4、Sun Solaris 2.5.1,2.6,2.7,2.8、OpenBSD 2.6,2.7/NetBSD、HP UX 10.20 | 255   |
-| Windows 95/98/98SE、Windows ME                               | 32    |
-| Windows NT 4 WRKS、Windows NT4 Server、Windows2000、Windows XP/7/8/10 | 128   |
+| 操作系统                                                                                 | TTL值 |
+| ------------------------------------------------------------------------------------ | ---- |
+| UNIX                                                                                 | 255  |
+| Compaq Tru64 5.0                                                                     | 64   |
+| Windows XP-32bit                                                                     | 128  |
+| Linux Kernel 2.2.x & 2.4.x                                                           | 64   |
+| FreeBSD 4.1,4.0,3.4、Sun Solaris 2.5.1,2.6,2.7,2.8、OpenBSD 2.6,2.7/NetBSD、HP UX 10.20 | 255  |
+| Windows 95/98/98SE、Windows ME                                                        | 32   |
+| Windows NT 4 WRKS、Windows NT4 Server、Windows2000、Windows XP/7/8/10                   | 128  |
 
 #### amap
 
@@ -125,6 +175,15 @@ amap尝试识别运行在非正常端口上的应用程序。
 
 ```bash
 amap -bqv 192.168.29.137 80 #-b显示接受的服务标识信息 -q不显示关闭端口 -v详细信息
+amap -bq 192.168.29.137 50-100
+```
+
+#### p0f
+
+被动指纹识别，分析Wireshark捕获的流量包，信息包含：操作系统、端口、防火墙、NAT、负载均衡、已启动时间、DSL/ISP信息等。
+
+```bash
+p0f -r /tmp/targethost.pcap -o p0f-result.log
 ```
 
 ### 服务信息

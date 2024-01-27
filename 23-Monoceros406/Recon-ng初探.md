@@ -40,3 +40,18 @@ options set SOURCE blog.bbskali.cn
 ```bash
 show hosts
 ```
+
+## 实战
+
+枚举百度网站子域名，并导出为csv。
+
+```
+help
+show modules
+use recon/domains-hosts/baidu_site
+show options
+set SOURCE baidu.com
+run
+use reporting/csv
+run
+```
