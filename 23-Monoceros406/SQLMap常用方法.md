@@ -79,6 +79,12 @@ sqlmap -u "http://xxx/union.php?id=1" --current-user
 sqlmap -u http://xxx/?id=1 --level 5
 ```
 
+随机代理：
+
+```bash
+sqlmap -r 123.txt --random-agent --level 3
+```
+
 当前用户是否为管理权限：
 
 ```bash
