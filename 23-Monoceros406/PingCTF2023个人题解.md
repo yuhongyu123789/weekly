@@ -1,7 +1,7 @@
 ---
 title: PingCTF2023个人题解
 date: 2023-12-09 18:49:08
-tags: CTF
+tags: 解题报告
 mathjax: true
 ---
 

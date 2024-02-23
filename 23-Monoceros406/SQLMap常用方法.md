@@ -1,7 +1,7 @@
 ---
 title: SQLMap常用方法
 date: 2024-01-01 10:26:43
-tags: SQLMap
+tags: 渗透测试
 mathjax: true
 ---
 

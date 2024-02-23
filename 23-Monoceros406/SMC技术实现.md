@@ -1,7 +1,7 @@
 ---
 title: SMC技术实现
 date: 2023-11-10 18:32:49
-tags: SMC
+tags: 逆向工程
 mathjax: true
 ---
 

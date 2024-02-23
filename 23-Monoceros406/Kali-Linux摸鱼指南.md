@@ -1,7 +1,7 @@
 ---
 title: Kali-Linux摸鱼指南
 date: 2023-12-02 17:43:19
-tags: Kali
+tags: 渗透测试
 mathjax: true
 ---
 

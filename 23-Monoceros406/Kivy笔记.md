@@ -1,7 +1,8 @@
 ---
 title: Kivy笔记
 date: 2023-10-25 17:06:16
-tags: Kivy
+tags: Python
+mathjax: true
 ---
 
 # Kivy笔记

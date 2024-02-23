@@ -1,7 +1,7 @@
 ---
 title: Kali-Linux常用密码攻击方法
 date: 2024-01-13 20:28:36
-tags: Kali
+tags: 渗透测试
 mathjax: true
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: ISCTF2023个人解题报告
 date: 2023-11-27 22:06:01
-tags: CTF
+tags: 解题报告
 mathjax: true
 ---
 

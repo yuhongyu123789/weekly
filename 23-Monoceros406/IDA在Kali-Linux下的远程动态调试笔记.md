@@ -1,7 +1,8 @@
 ---
 title: IDA在Kali Linux下的远程动态调试笔记
 date: 2023-10-21 11:22:08
-tags: IDA
+tags: 逆向工程
+mathjax: true
 ---
 
 # IDA在Kali Linux下的远程动态调试笔记

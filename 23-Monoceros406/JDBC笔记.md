@@ -1,7 +1,7 @@
 ---
 title: JDBC笔记
 date: 2023-10-14 20:22:11
-tags: JDBC
+tags: Java
 mathjax: true
 ---
 

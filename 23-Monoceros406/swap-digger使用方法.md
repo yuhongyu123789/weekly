@@ -1,7 +1,7 @@
 ---
 title: swap_digger使用方法
 date: 2024-01-13 20:29:36
-tags: Kali
+tags: 渗透测试
 mathjax: true
 ---
 

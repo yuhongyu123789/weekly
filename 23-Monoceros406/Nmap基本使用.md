@@ -1,7 +1,7 @@
 ---
 title: Nmap基本使用
 date: 2024-01-01 12:14:37
-tags: Nmap
+tags: 渗透测试
 mathjax: true
 ---
 
@@ -47,6 +47,8 @@ mathjax: true
 
 -sT、-sU：分别进行详细的TCP、UDP端口扫描（-sU要root，还很慢...）
 
+-oG：输出结果到文件
+
 ## 基本方法
 
 扫描单/多个目标地址：
@@ -56,6 +58,7 @@ nmap 192.168.0.100
 nmap 192.168.0.100 192.168.0.105
 nmap 192.168.0.100-110
 nmap 192.168.100/24 #扫描同一个C网段
+nmap -p 22 192.168.41.* -oG /tmp/nmap-targethost-tcp455.txt
 nmap -p 1-50 192.168.29.136 #扫描1-50端口
 nmap -p 21,23 192.168.29.136
 nmap -iL targets.txt #扫描targets.txt中列出的目标地址
@@ -63,6 +66,7 @@ nmap 192.168.0.100/24 -exclude 192.168.0.105 #排除某个目标地址
 nmap 192.168.0.100/24 -excludefile targets.txt
 nmap 192.168.0.100 -p 21,22,23,80 #扫描指定端口
 nmap --traceroute 192.168.0.105 #路由跟踪
+nmap -sP 192.168.41.136 #查看主机是否在线
 nmap -sP 192.168.0.100/24 #目标地址所在C段在线情况
 namp -O 192.168.0.105 #指纹识别目标的操作系统版本
 nmap -sV 192.168.0.105 #开放端口对应的服务版本
@@ -100,4 +104,10 @@ nmap -p 23 --script telnet-brute --script-args userdb=myusers.lst,passdb=mypwds.
 nmap -sV --script unusual-port 192.168.123.173 #精确确认端口运行的服务
 nmap --script vnc-info 192.168.123.173
 nmap --script vnc-brute --script-args brute.guesses=6,brute.emptypass=true,userdb=/root/zi.txt,brute.useraspass=true,passdb=/root/zi.txt,brute.retries=3,brute.threads=2,brute.delay=3 192.168.123.173 #暴力破解vnc
+```
+
+## 其他
+
+```bash
+nping --echo-client "public" echo.nmap.org #挖坑待填
 ```

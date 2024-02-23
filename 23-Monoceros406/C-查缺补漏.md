@@ -2,6 +2,7 @@
 title: C++查缺补漏
 date: 2023-11-06 15:37:41
 tags: C++
+mathjax: true
 ---
 
 # C++查缺补漏

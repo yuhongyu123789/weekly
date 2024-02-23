@@ -1,7 +1,7 @@
 ---
 title: Ren'Py笔记
 date: 2023-10-15 20:50:22
-tags: Ren'Py
+tags: Python
 mathjax: true
 ---
 

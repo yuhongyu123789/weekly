@@ -1,7 +1,7 @@
 ---
 title: Python-Tkinter
 date: 2023-10-15 20:51:21
-tags: Tkinter
+tags: Python
 mathjax: true
 ---
 

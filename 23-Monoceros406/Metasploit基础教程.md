@@ -1,7 +1,7 @@
 ---
 title: Metasploit基础教程
 date: 2024-01-13 20:28:53
-tags: Metasploit
+tags: 渗透测试
 mathjax: true
 ---
 

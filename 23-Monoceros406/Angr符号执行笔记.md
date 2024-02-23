@@ -1,7 +1,7 @@
 ---
 title: Angr符号执行笔记
 date: 2023-10-29 20:56:26
-tags: Angr
+tags: 逆向工程
 mathjax: true
 ---
 

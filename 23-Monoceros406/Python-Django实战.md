@@ -1,7 +1,7 @@
 ---
 title: Python-Django实战
 date: 2023-12-11 19:18:32
-tags: Django
+tags: Python
 mathjax: true
 ---
 

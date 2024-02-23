@@ -2,6 +2,7 @@
 title: C++逆向入门
 date: 2023-10-29 17:39:35
 tags: C++
+mathjax: true
 ---
 
 # C++逆向入门

