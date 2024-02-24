@@ -1,7 +1,7 @@
 ---
 title: Python-pyenv
 date: 2023-10-15 20:55:00
-tags: pyenv
+tags: Python
 mathjax: true
 ---
 

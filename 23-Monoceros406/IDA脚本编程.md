@@ -1,7 +1,8 @@
 ---
 title: IDA脚本编程
 date: 2023-10-29 16:35:00
-tags: IDA
+tags: 逆向工程
+mathjax: true
 ---
 
 # IDA脚本编程

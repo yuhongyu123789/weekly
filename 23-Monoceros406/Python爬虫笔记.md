@@ -1,7 +1,7 @@
 ---
 title: Python爬虫笔记
 date: 2023-10-15 21:06:24
-tags: 爬虫
+tags: Python
 mathjax: true
 ---
 

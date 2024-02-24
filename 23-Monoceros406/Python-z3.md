@@ -1,7 +1,7 @@
 ---
 title: Python-z3
 date: 2023-10-15 20:58:33
-tags: z3
+tags: Python
 mathjax: true
 ---
 

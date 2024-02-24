@@ -1,7 +1,7 @@
 ---
 title: Jadx在雷电模拟器下的远程动态调试笔记
 date: 2023-10-23 19:32:14
-tags: Jadx
+tags: 移动安全
 mathjax: true
 ---
 

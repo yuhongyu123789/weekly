@@ -1,7 +1,7 @@
 ---
 title: Python-Pandas
 date: 2023-10-15 20:47:39
-tags: Pandas
+tags: Python
 mathjax: true
 ---
 

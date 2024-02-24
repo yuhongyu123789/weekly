@@ -1,7 +1,7 @@
 ---
 title: Forbidden_buster初探
 date: 2024-01-26 22:28:56
-tags: Forbidden Buster
+tags: 渗透测试
 mathjax: true
 ---
 

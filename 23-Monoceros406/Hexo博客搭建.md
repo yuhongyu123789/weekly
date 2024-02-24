@@ -1,7 +1,7 @@
 ---
 title: Hexo博客搭建
 date: 2023-10-14 18:49:02
-tags: Hexo
+tags: 其他
 mathjax: true
 ---
 

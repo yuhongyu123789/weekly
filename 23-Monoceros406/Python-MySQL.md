@@ -1,7 +1,7 @@
 ---
 title: Python-MySQL
 date: 2023-10-15 20:46:59
-tags: Python MySQL
+tags: Python
 mathjax: true
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: CvxPy整数规划笔记
 date: 2023-11-15 15:57:10
-tags: CvxPy
+tags: 逆向工程
 mathjax: true
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: URLFinder基础操作
 date: 2024-01-26 23:05:55
-tags: URLFinder
+tags: 渗透测试
 mathjax: true
 ---
 

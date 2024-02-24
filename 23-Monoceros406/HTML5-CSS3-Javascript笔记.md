@@ -1,7 +1,7 @@
 ---
 title: HTML5 & CSS3 & Javascript笔记
 date: 2023-10-14 19:20:38
-tags: HTML5 CSS3 Javascript
+tags: 前端
 mathjax: true
 ---
 

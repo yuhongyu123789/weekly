@@ -1,7 +1,7 @@
 ---
 title: Recon-ng初探
 date: 2024-01-13 20:29:23
-tags: Kali
+tags: 渗透测试
 mathjax: true
 ---
 

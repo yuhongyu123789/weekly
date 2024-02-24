@@ -1,7 +1,7 @@
 ---
 title: Clash-For-Linux安装方法
 date: 2023-12-23 10:00:05
-tags: Clash
+tags: 其他
 mathjax: true
 ---
 

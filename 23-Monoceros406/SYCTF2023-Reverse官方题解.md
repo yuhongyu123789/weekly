@@ -1,7 +1,7 @@
 ---
 title: SYCTF2023-Reverse官方题解
 date: 2023-12-13 09:48:45
-tags: CTF
+tags: 解题报告
 mathjax: true
 ---
 

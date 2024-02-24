@@ -1,7 +1,7 @@
 ---
 title: Python-OpenCV
 date: 2023-10-15 21:00:20
-tags: OpenCV
+tags: Python
 mathjax: true
 ---
 

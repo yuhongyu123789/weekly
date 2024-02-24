@@ -1,7 +1,7 @@
 ---
 title: Frida初体验
 date: 2023-10-23 19:05:38
-tags: Frida
+tags: 移动安全
 mathjax: true
 ---
 

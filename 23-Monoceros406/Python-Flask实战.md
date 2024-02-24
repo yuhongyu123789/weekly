@@ -1,7 +1,7 @@
 ---
 title: Python-Flask实战
 date: 2023-12-08 19:58:56
-tags: Flask
+tags: Python
 mathjax: true
 ---
 

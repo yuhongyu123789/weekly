@@ -1,7 +1,7 @@
 ---
 title: Metasploit实战基础
 date: 2023-12-29 13:11:10
-tags: Metasploit
+tags: 渗透测试
 mathjax: true
 ---
 

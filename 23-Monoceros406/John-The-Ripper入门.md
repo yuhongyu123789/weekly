@@ -1,7 +1,7 @@
 ---
 title: John-The-Ripper入门
 date: 2023-12-31 11:11:33
-tags: John
+tags: 渗透测试
 mathjax: true
 ---
 

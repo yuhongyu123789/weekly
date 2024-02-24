@@ -1,7 +1,7 @@
 ---
 title: snakeCTF2023个人解题报告
 date: 2023-12-09 20:16:36
-tags: CTF
+tags: 解题报告
 mathjax: true
 ---
 

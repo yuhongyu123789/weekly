@@ -1,7 +1,7 @@
 ---
 title: Kali-Linux渗透测试入门
 date: 2024-01-13 20:28:45
-tags: Kali
+tags: 渗透测试
 mathjax: true
 ---
 

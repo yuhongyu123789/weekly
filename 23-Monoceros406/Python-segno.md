@@ -1,7 +1,7 @@
 ---
 title: Python-segno
 date: 2023-10-15 20:57:24
-tags: segno
+tags: Python
 mathjax: true
 ---
 
